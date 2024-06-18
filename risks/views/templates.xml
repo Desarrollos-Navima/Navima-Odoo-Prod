@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_partner_view_form" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit.test</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='sales_purchases']" position="after">
+                    <page name="riesgos" string="Riesgos">
+                        <group string="" name="codigo">
+                            <group name="asegurar" string="">
+                                <field style="width:10% !important;" name="asegurado"/>
+                                <field name="antiguo_codigo_cliente"/>
+                            </group>
+                            <br/>
+                            <group name="fechas" string="Fechas">
+                                <field name="fecha_propuesta" widget="date"/>
+                                <field name="fecha_concesion" widget="date"/>
+                                <field name="fecha_validacion" widget="date"/>
+                                <field name="fecha_cancelacion" widget="date"/>
+                            </group>
+                            <group name="cantidades" string="Cantidades">
+                                <field name="cantidad_propuesta"/>
+                                <field name="cantidad_concesion"/>
+                                <field name="cantidad_validacion"/>
+                            </group>
+                            <group name="aseguradora" string="Aseguradora">
+                                <field name="empresa_riesgo"/>
+                                <field name="poliza"/>
+                                <field name="referencia_proveedor"/>
+                                <field name="metodo_de_pago"/>
+                            </group>
+                            <group name="deudas" string="Deudas">
+                                <field name="moroso"/>
+                            </group>
+                            <group name="notas" style="width: 100% !important;" string="Notas">
+                                <field name="comentario_riego"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

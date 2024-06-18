@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <record id="stage_100" model="nvm_design.stage">
+            <field name="name">Nuevo Diseño</field>
+            <field name="sequence" eval="1" />
+            <field name="fold" eval="False" />
+        </record>
+        <!-- ETAPAS OCULTAS
+        
+        <record id="stage_101" model="nvm_design.stage">
+            <field name="name">En progreso</field>
+            <field name="sequence" eval="2" />
+            <field name="fold" eval="False" />
+        </record>
+
+        <record id="stage_102" model="nvm_design.stage">
+            <field name="name">Solicitud de prototipo</field>
+            <field name="sequence" eval="3" />
+            <field name="fold" eval="False" />
+        </record>
+
+        <record id="stage_103" model="nvm_design.stage">
+            <field name="name">Recepción de prototipo</field>
+            <field name="sequence" eval="4" />
+            <field name="fold" eval="False" />
+        </record>
+
+        -->
+
+        <record id="stage_104" model="nvm_design.stage">
+            <field name="name">Solicitud muestra agentes</field>
+            <field name="sequence" eval="5" />
+            <field name="fold" eval="False" />
+        </record>
+
+        <record id="stage_105" model="nvm_design.stage">
+            <field name="name">Muestras de agentes</field>
+            <field name="sequence" eval="6" />
+            <field name="fold" eval="False" />
+        </record>
+
+        <record id="stage_106" model="nvm_design.stage">
+            <field name="name">Listo para producción</field>
+            <field name="sequence" eval="7" />
+            <field name="fold" eval="False" />
+        </record>
+
+        <record id="stage_107" model="nvm_design.stage">
+            <field name="name">Producir</field>
+            <field name="sequence" eval="8" />
+            <field name="fold" eval="False" />
+        </record>
+        
+    </data>
+</odoo>

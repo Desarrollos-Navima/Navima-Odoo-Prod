@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="nvm_stock_lot_swap_nvm" model="ir.ui.view">
+            <field name="name">nvm.stock.lot.swap</field>
+            <field name="model">nvm.stock.lot.swap</field>
+            <field name="arch" type="xml">
+                <form>
+                    <button name="set_swapping" string="Actualizar" class="oe_highlight" type="object"/>
+                    <field name="ids_posibles">
+                        <tree>
+                            <field name="product_id" string="Producto"/>
+                            <button name="swap_lot_ids" string="Elegir" class="oe_highlight" type="object"/>
+                            <field name="lot_id" string="Num. Lote"/>
+                            <field name="client_id" string="Cliente"/>
+                            <field name="date_from" string="Fecha"/>
+                        </tree>
+                    </field>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_menu_wizard" model="ir.actions.act_window">
+            <field name="name">Intercambiar lotes</field>
+            <field name="res_model">nvm.stock.lot.swap</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="nvm_stock_lot_swap_nvm"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

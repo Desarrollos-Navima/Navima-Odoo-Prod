@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_horma_tree" model="ir.ui.view">
+            <field name="name">horma.horma.tree</field>
+            <field name="model">horma.horma</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="plataforma"/>
+                    <field name="alto_tacon"/>
+                    <field name="tipo_de_tacon"/>
+                    <field name="tipo_de_puntera"/>
+                    <field name="tipo_de_plantilla"/>
+                    <field name="tipo_suela"/>
+                    <field name="material_plataforma"/>
+                    <field name="material_suela"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="horma_form_view" model="ir.ui.view">
+            <field name="name">horma.horma.common.form.view</field>
+            <field name="model">horma.horma</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+
+                    <span>
+
+                        <h1>
+                            HORMA
+                        </h1>
+
+                    </span>
+                    <br/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" style="width:40%; margin-right: 20px;"/>
+                        </h1>
+                    </div>
+                    
+                    <group>
+
+                        <group>
+                        
+                            <field name="tipo_de_tacon"/>
+                            <field name="plataforma"/>
+                            <field name="tipo_suela"/>
+                            <field name="tipo_de_plantilla"/>
+                        
+                        </group>
+                        
+                        <group>
+                        
+                            <field name="alto_tacon"/>
+                            <field name="tipo_de_puntera"/>
+                            <field name="material_plataforma"/>
+                        
+                        </group>
+                        
+                    </group>
+                    
+                    <!--<group string="MATERIALES DE LA SUELA">
+                        
+                        <field name="materiales_porcentaje">
+                            
+                            <tree>
+                            
+                                <field name="material" string="Material"/>
+                                <field name="porcentaje_presencia" string="Porcentaje"/>
+                                
+                            </tree>
+                                
+                        </field>
+                        
+                    </group> -->
+                            
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    
+        <record id="view_cartacoloresnavima_tree" model="ir.ui.view">
+            <field name="name">cartacoloresnavima.cartacoloresnavima.tree</field>
+            <field name="model">cartacoloresnavima.cartacoloresnavima</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="tipo_de_material"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="colecciones_form_view" model="ir.ui.view">
+            <field name="name">colecciones.colecciones.form.view</field>
+            <field name="model">colecciones.colecciones</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+
+                    <span>
+
+                        <h1>
+                            COLECCIONES
+                        </h1>
+
+                    </span>
+                    <br/><br/>
+                    
+                    <h1>
+                
+                        <field name="name" readonly="1"/>
+                        
+                    </h1>
+                    
+                    <group>
+                        
+                        <group style="width: 25% !important;">
+                        
+                        <field name="temporada"/>
+                        
+                        </group>
+                        
+                        <group style="width: 25% !important;">
+                        
+                        <field name="marca_nvm"/>
+                        
+                        </group>
+                        
+                        <group style="width: 51% !important;">
+                        
+                        <field string="Conversión moneda" name="cash_conversion"/>
+                        
+                        </group>
+                        
+                    </group>
+                
+                    <field name="logo_marca" widget="image" class="oe_avatar" style="float: right !important; margin-top: -35px; margin-rigth: 5px; height: 80px; width: 120px;"/>
+                
+                    <group>
+                        
+                        <group string="Propuesto" style="width: 25%;">
+                        
+                        <field name="multiplicador" string="Multiplicador EUR"/>
+                        <field name="multiplicador_usa" string="Multiplicador USD"/>
+                        <field name="multiplicador_it" string="Multiplicador F.O.B"/>
+                        
+                        </group>
+                        
+                        <group string="Wholesalers" style="width: 25%;">
+                        
+                        <field name="multiplicador_pvr" string="Multiplicador EUR"/>
+                        <field name="multiplicador_usa_pvr" string="Multiplicador USD"/>
+                        <field name="multiplicador_usa_pvr" string="Multiplicador F.O.B"/>
+                        
+                        </group>
+                    
+                    </group>
+                    
+                
+                    <group string="Tarifas" style="width: 50%;">
+                        <field name="tarifa_wholesalers" string="Wholesalers EUR"/>
+                        <field name="tarifa_wholesalers_usd" string="Wholesalers USD"/>
+                        <field name="tarifa_fob" string="Wholesalers F.O.B"/>
+                        <field name="tarifa" string="PVP EUR"/>
+                        <field name="tarifa_usd" string="PVP USD"/>
+                    </group>
+                
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="tipo_producto_form_view" model="ir.ui.view">
+            <field name="name">tipo.producto.form.view</field>
+            <field name="model">tipo.producto</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <label for="name" string="Tipo de producto"/>
+                        <h1><field name="name" placeholder="CP" style="width:40%; margin-right: 20px;"/></h1>
+
+                        <label for="descripcion" string="Descripcion"/>
+                        <h1><field name="descripcion" placeholder="China Piel" style="width:40%; margin-right: 20px;"/></h1>
+
+                        <label for="multiplo_precio" string="Multiplicador"/>
+                        <field name="multiplo_precio" placeholder="1.10" style="width:15%; margin-right: 20px;"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="cash_conversion_form_view" model="ir.ui.view">
+            <field name="name">cash.conversion.form.view</field>
+            <field name="model">cash.conversion</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <form>
+  
+                    <sheet>
+
+                    <span>
+
+                        <h1>
+                            CONVERSIÓN DE MONEDA
+                        </h1>
+
+                    </span>
+                    <br/>
+                    
+                    <div class="oe_title">
+                        
+                        <h1>
+                        
+                            <field placeholder="Nombre" name="name"/>
+                        
+                        </h1>
+                        
+                    </div>
+                    
+                    <group>
+                        
+                        <field name="marca"/>
+                        <field name="temporada"/>
+                        <field name="moneda_a_convertir_id"/>
+                        <field name="moneda_de_conversion_id"/>
+                        <field name="multiplo_conversion" string="Múltiplo de la conversión" widget="monetary" style="width: 40%;"/>
+                        
+                    </group>
+                    
+                    </sheet>
+                    
+                </form>
+            </field>
+        </record>
+
+        <record id="materiales_materiales_form_view" model="ir.ui.view">
+            <field name="name">materiales.materiales.form.view</field>
+            <field name="model">materiales.materiales</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <form>
+                <field name="display_name" invisible="1"/>
+                <field name="material" invisible="1"/>
+                    <sheet>
+
+                        <span>
+
+                            <h1>
+                                MATERIAL
+                            </h1>
+
+                        </span>
+                        <br/><br/>
+
+                        <label for="name" string="Material"/>
+                        <h1><field name="name" style="width:40%; margin-right: 20px;"/></h1>
+
+                        <label for="tipo_de_producto" string="Tipo de producto"/>
+                        <field name="tipo_de_producto" style="width:15%; margin-right: 20px;"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_product_form_inherit" model="ir.ui.view">
+            <field name="name">product.template.common.form.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <!---
+                <form>
+
+                    <group>
+
+                        <label class="oe_edit_only" for="name" string="Product Name" style="width:50%; margin-right: 15px;"/>
+                        <h1>
+                            <field name="name" style="width:50%; margin-right: 15px;" placeholder="Product Name"/>
+                        </h1>
+
+                        <br/>
+
+                        <label class="oe_edit_only" for="coleccion_navima" string="Colección" style="width: 30%; margin-right: 15px;"/>
+                        <label class="oe_edit_only" for="modelo_navima" string="Modelo base" style="width: 13%; margin-right: 15px;"/>
+                        <label class="oe_edit_only" for="horma_nvm" string="Horma" style="width:13%;"/>
+                        <h1>
+                            <field name="coleccion_nvm" style="width:30%; margin-right: 15px;"/>
+                            <field name="modelo_navima" style="width:13%; margin-right: 15px;" placeholder="Modelo"/>
+                            <field name="horma_nvm" style="width:13%;"/>
+                        </h1>
+                        
+
+                    </group>
+
+                    <group>
+                        <field name="image_1920" widget="image" class="oe_avatar" style="float: right !important;" options='{"preview_image": "image_1920", "size": [287, 580]}'/>
+                        <field name="foto_marca" widget="image" class="oe_avatar" style="float: right !important;" options='{"preview_image": "foto_marca", "size": [287, 43]}'/>
+                    </group>
+
+                </form>
+
+                -->
+                
+                <xpath expr="//field[@name='categ_id']" position="after">
+                    <field name="carta_color_navima"/>
+                    <field name="sku_navima"/>
+                    <field name="timbrado"/>
+                </xpath>
+
+                <xpath expr="//page[@name='general_information']" position="after">
+                    <page name="web" string="Web" groups="product.group_product_variant">
+                        <label for="descripcion_web_es" string="Descripción web español"/>
+                        <field name="descripcion_web_es" placeholder="Descripción para la web."/>
+                        <br/>
+                        <label for="descripcion_web_en" string="Descripción web inglés"/>
+                        <field name="descripcion_web_en" placeholder="Description for the web."/>
+                        <br/>
+                        <label for="referencia_video_navima" string="Referencia de video"/>
+                        <field name="referencia_video_navima" placeholder="Referencia de video"/>
+                    </page>
+
+                    <page string="Coste y PVP">
+
+                        <group string="Coste proveedor" style="width: 25%;">
+                            
+                            <field name="coste_propuesto" string="Coste Propuesto"/>
+                            <field name="coste_final_propuesto" string="Coste con aranceles"/>
+                            <field name="precio_propuesto" string="Precio Propuesto"/>
+
+                        </group>
+
+                        <group string="Coste deseado" style="width: 25%;">
+                            
+                            <label for="coste" string="Coste Deseado"/>
+                            <field nolabel="1" name="coste"/>
+
+                            <label for="coste_final" string="Coste con aranceles"/>
+                            <field nolabel="1" name="coste_final"/>
+
+                            <label for="extra_cost" string="Precio Extra"/>
+                            <field nolabel="1" name="extra_cost"/>
+
+                        </group>
+
+                        <group string="PVP deseado" style="width: 25%;">
+
+                            <label for="precio" string="Precio EUR"/>
+                            <field nolabel="1" name="precio"/>
+
+                            <label for="precio_usa" string="Precio USD"/>
+                            <field nolabel="1" name="precio_usa"/>
+
+                            <label for="precio_it" string="Precio F.O.B"/>
+                            <field nolabel="1" name="precio_it"/>
+
+                        </group>
+
+                        <group string="Wholesalers" style="width: 25%;">
+
+                            <label for="precio_final" string="Final EUR"/>
+                            <field nolabel="1" name="precio_final"/>
+
+                            <label for="precio_final_usa" string="Final USD"/>
+                            <field nolabel="1" name="precio_final_usa"/>
+                            
+                            <label for="precio_final_it" string="Final F.O.B"/>
+                            <field nolabel="1" name="precio_final_it"/>
+
+                        </group>
+
+                        <group string="PVR" style="width: 25%; float: rigth;">
+                            <field name="precio_pvr" string="PVR EUR"/>
+                            <field name="precio_usa_pvr" string="PVR USD"/>
+                        </group>
+
+                        <group string="PVP" style="width: 25%; float: rigth;">
+                            <field name="precio_pvp" string="PVP EUR"/>
+                            <field name="precio_usa_pvp" string="PVP USD"/>
+                        </group>
+
+                        <group string="Moneda Proveedor" style="width: 25%;">
+                                
+                            <field name="moneda_del_proveedor" string="El proveedor trabaja con"/>
+
+                        </group>
+                        <!--
+                        <group string="COSTE Y PVP DESEADO" style="width: 50%;">
+                            <field name="coste" widget="monetary" string="Coste Deseado"/>
+                            <field name="coste_final" widget="monetary" string="Coste con aranceles"/>
+                            <field name="precio" widget="monetary" style="width: 50%;" string="Precio Deseado"/>
+                            <button type="object" name="calcular_precio" string="Calcular coste y PVP"/>
+                        </group>
+
+                        <group string="COSTE PROVEEDOR Y PVP" style="width: 50%;">
+                            <field name="coste_propuesto" widget="monetary" string="Coste Propuesto"/>
+                            <field name="coste_final_propuesto" widget="monetary" string="Coste con aranceles"/>
+                            <field name="precio_propuesto" style="width: 50%;" widget="monetary" string="Precio Propuesto"/>
+                            <button type="object" name="calcular_precio_propuesto" string="Calcular coste y PVP"/>
+                        </group>
+
+                        <group string="PRECIO FINAL">
+                            <field name="precio_final" widget="monetary" string="Precio Final"/>
+                            <button type="object" style="width: 20%;" name="calcular_precio_reverso" string="Calcular coste y PVP (reversa)"/>
+                        </group>
+
+                        <group string="INFORMACIÓN OPERATIVA">
+                            <field name="cash_conversion" string="Conversión de moneda"/>
+                            <field name="multiplicador" string="Multiplicador"/>
+                        </group>
+                        -->
+
+                    </page>
+
+                    <page string="Operativa">
+
+                        <group string="Producto">
+                            <button type="object" name="make_variants" string="Crear variantes"/>
+                        </group>
+                        
+                    </page>
+
+                </xpath>
+
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

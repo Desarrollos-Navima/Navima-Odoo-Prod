@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<odoo>
+    <!-- Activity types config -->
+    <record id="mail_activity_type_action_config_design" model="ir.actions.act_window">
+        <field name="name">Activity Types</field>
+        <field name="res_model">mail.activity.type</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">['|', ('res_model_id', '=', False), ('res_model_id.model', '=', 'nvm_design.request')]</field>
+        <field name="context">{'default_res_model': 'nvm_design.request'}</field>
+    </record>
+
+    <record id="report_nvm_request_crear_etiquetas" model="ir.actions.report">
+        <field name="name">Crear etiquetas</field>
+        <field name="model">nvm_design.request</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">nvm_design.reporte_etiquetas</field>
+        <field name="report_file">nvm_design.reporte_etiquetas</field>
+        <field name="print_report_name">'Etiquetas - %s' % (object.name or 'Diseño').replace('/','')</field>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="reporte_etiquetas">
+
+        <t t-name="nvm_design.reporte_etiquetas">
+
+            <t t-call="web.basic_layout">
+            
+            <div t-att-style="'position:left;'">
+                    
+                    <div t-foreach="docs" t-as="o">
+                
+                        <table class="table table-sm table-borderless">
+                            
+                            <t t-foreach="range(8)" t-as="row">
+                            
+                            <tr>
+                                
+                                <t t-foreach="range(3)" t-as="col">
+                                
+                                    <td>
+                                        
+                                        <div style="margin-top: 10px !important;" t-att-style="'position:relative; width: 73mm; height: 38mm; border: 1px solid %s;' % (o.env.user.company_id.primary_color or 'black')">
+                                            
+                                            <img t-if="o.boceto_nvm" class="image" t-att-src="image_data_uri(o.boceto_nvm)" style="float: right; width: 30mm; height: 30mm; padding-right: 5mm; padding-top: 5mm;"/>
+                                            
+                                            <br/>
+                                            
+                                            <h4><b><span t-att-style="'padding-left: 10mm;'" t-field="o.modelo_base_nvm"/><span t-field="o.carta_color_referencia"/></b></h4>
+                                            <img t-att-style="'padding-left: 5mm; width: 40mm; height: 10mm;'" t-att-src="'/report/barcode/EAN13/%s' % '007T04BK'"/>
+                                            <br/>
+                                            <span t-att-style="'padding-left: 10mm;'" t-field="o.product_name_nvm"/>
+
+                                        </div>
+                                        
+                                    </td>
+                                
+                                </t>
+                            
+                            </tr>
+                            
+                            </t>
+                        
+                        </table>
+                    
+                    </div>
+                
+                </div>
+                    
+            </t>
+
+        </t>
+
+    </template>
+
+    <!-- reporte lista de precios -->
+
+    <record id="report_nvm_design_request" model="ir.actions.report">
+        <field name="name">NVM Design Request Report</field>
+        <field name="model">nvm_design.request</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">nvm_design.reporte_precios</field>
+        <field name="report_file">nvm_design.reporte_precios</field>
+        <field name="print_report_name">"Precios NVM"</field>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="nvm_design_request_report">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="report.external_layout">
+                    <div class="page">
+                        <h2>NVM Design Requests</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Photo</th>
+                                    <th>Modelo Base NVM</th>
+                                    <th>Carta Color Referencia</th>
+                                    <th>Horma NVM</th>
+                                    <th>Variante de Horma NVM</th>
+                                    <th>Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="doc.search([])" t-as="request">
+                                    <tr>
+                                        <td><img t-att-src="'data:image/png;base64,%s' % to_text(request.boceto_nvm)" style="max-width: 100px"/></td>
+                                        <td><t t-esc="request.modelo_base_nvm"/></td>
+                                        <td><t t-esc="request.carta_color_referencia"/></td>
+                                        <td><t t-esc="request.horma_nvm"/></td>
+                                        <td><t t-esc="request.variante_de_horma_nvm"/></td>
+                                        <td><t t-esc="request.name"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    
+    <menuitem id="design_menu_config_activity_type"
+        action="mail_activity_type_action_config_design"
+        parent="menu_design_configuration"
+        sequence="20"
+        groups="base.group_no_one"/>
+
+    
+</odoo>

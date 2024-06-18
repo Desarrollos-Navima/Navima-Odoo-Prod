@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="cartacoloresnavima_form_view" model="ir.ui.view">
+            <field name="name">cartacoloresnavima.cartacoloresnavima.form.view</field>
+            <field name="model">cartacoloresnavima.cartacoloresnavima</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <form>
+  
+                    <sheet>
+                    
+                        <h1>
+                            
+                            <field name="name"/>
+                            
+                        </h1>
+                        
+                        <group>
+                            
+                            <field name="coleccion"/>
+                            <field name="codigo_material_interno"/>
+                            <field name="proveedor"/>
+                            <field name="material"/>
+                            <field name="marca"/>
+                            <field name="descripcion_material"/>
+                            
+                            <field name="color" widget="many2many">
+                            
+                                <tree>
+                                
+                                    <field string="Color" name="display_name"/>
+                                    <field string="Grupo de Color" name="proveedor"/>
+                                    
+                                </tree>
+                                
+                            </field>
+                            
+                        </group>
+                    
+                    </sheet>
+                    
+                </form>
+            </field>
+        </record>
+
+        <record id="view_cartacoloresnavima_tree" model="ir.ui.view">
+            <field name="name">cartacoloresnavima.cartacoloresnavima.tree</field>
+            <field name="model">cartacoloresnavima.cartacoloresnavima</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="marca"/>
+                    <field name="material"/>
+                    <field name="descripcion_material"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_coloresnnavima_tree" model="ir.ui.view">
+            <field name="name">coloresnnavima.tree</field>
+            <field name="model">coloresnnavima</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="proveedor"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_coloresnnavima_form_view" model="ir.ui.view">
+            <field name="name">coloresnnavima.form.view</field>
+            <field name="model">coloresnnavima</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <form>
+                    <field name="display_name" on_change="1" modifiers="{}" style="width: 50%;"/>
+                    <field name="name" modifiers="{}" style="width: 50%;"/>
+                    <field name="proveedor" can_create="true" can_write="true" modifiers="{}" style="width: 50%;"/>
+                    <field name="codigo_color_old" modifiers="{}" style="width: 50%;"/>
+                    <field name="cod_rgb" modifiers="{}" widget="colorpicker" style="width: 50%;"/>
+                    <separator modifiers="{}"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_grupocolor_form_view" model="ir.ui.view">
+            <field name="name">gruposcolores.form.view</field>
+            <field name="model">gruposcolores</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <form>
+                    <div name="button_box" position="inside">
+                        <button name="compute_colores_count" type="object" icon="fa-tint" class="oe_stat_button">
+                            <field string="Colores" name="colores_count" widget="statinfo"/>
+                        </button>
+                    </div>
+
+                    <field name="name"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_hs_master_tree" model="ir.ui.view">
+            <field name="name">hs.master.tree</field>
+            <field name="model">hs.master</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="display_name"/>
+                    <field name="descripcion"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hs_master_form_view" model="ir.ui.view">
+            <field name="name">hs.master.form.view</field>
+            <field name="model">hs.master</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <form>
+                    <b>Código aduanero </b> <field name="display_name" style="width: 20%; margin-right:10px;"/>
+                    <b>Descripción </b> <field name="descripcion" style="width: 40%;"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_marcasnavima_form_view" model="ir.ui.view">
+            <field name="name">marcasnavima.form.view</field>
+            <field name="model">marcasnavima</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <form>
+                    <b>Nombre de la marca </b> <field name="display_name" style="width: 30%; margin-right:10px;"/>
+                    <b>Cliente </b> <field name="cliente" widget="many2one" style="width: 20%;"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_marcasnavima_tree" model="ir.ui.view">
+            <field name="name">marcasnavima.tree</field>
+            <field name="model">marcasnavima</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="cliente"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_marcasnavima_form_view" model="ir.ui.view">
+            <field name="name">timbrado.form.view</field>
+            <field name="model">timbrado</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <form>
+                    <b>Nombre del timbrado </b> <field name="display_name" style="width: 30%; margin-right:10px;"/>
+                    <b>Cliente </b> <field name="cliente" widget="many2one" style="width: 20%;"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_marcasnavima_tree" model="ir.ui.view">
+            <field name="name">timbrado.tree</field>
+            <field name="model">timbrado</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="cliente"/>
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</odoo>

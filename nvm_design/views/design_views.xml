@@ -1,0 +1,1040 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- equiment.request : views -->
+        <record id="hr_equipment_request_view_search" model="ir.ui.view">
+            <field name="name">nvm_design.request.search</field>
+            <field name="model">nvm_design.request</field>
+            <field name="arch" type="xml">
+                <search string="Design Request Search">
+                    <field name="name" string="Request"/>
+                    <field name="user_id" invisible="1"/>
+                    <field name="owner_user_id"/>
+                    <field name="stage_id"/>
+                    <field name="design_team_id"/>
+                    <filter string="My designs" name="my_designs" domain="[('user_id', '=', uid)]"/>
+                    <separator/>
+                    <filter string="To Do" name="todo" domain="[('stage_id.done', '=', False)]"/>
+                    <separator/>
+                    <filter string="Blocked" name="kanban_state_block" domain="[('kanban_state', '=', 'blocked')]"/>
+                    <filter string="Ready" name="done" domain="[('kanban_state', '=', 'done')]"/>
+                    <separator/>
+                    <filter string="High-priority" name="high_priority" domain="[('priority', '=', '3')]"/>
+                    <separator/>
+                    <filter string="Unscheduled" name="unscheduled" domain="[('schedule_date', '=', False)]"/>
+                    <separator/>
+                    <!-- BAJA POR PROBLEMAS DE COMPATIBILIDAD ODOO 16
+                    <filter string="Unread Messages" name="message_needaction" domain="[('message_needaction', '=', True)]"/>
+                    <separator/>
+                    <filter invisible="1" string="Late Activities" name="activities_overdue"
+                        domain="[('activity_ids.date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"
+                        help="Show all records which has next action date is before today"/>
+                    <filter invisible="1" string="Today Activities" name="activities_today"
+                        domain="[('activity_ids.date_deadline', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                    <filter invisible="1" string="Future Activities" name="activities_upcoming_all"
+                        domain="[('activity_ids.date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>
+                    <separator/>
+                    <filter string="Archived" name="inactive" domain="[('archive', '=', True)]"/>
+                    <group  expand='0' string='Group by...'>
+                        <filter string='Assigned to' name="assigned" domain="[]" context="{'group_by': 'user_id'}"/>
+                        <filter string='Category' name="category" domain="[]" context="{'group_by' : 'category_id'}"/>
+                        <filter string='Stage' name="stages" domain="[]" context="{'group_by' : 'stage_id'}"/>
+                        <filter string='Created By' name='created_by' domain="[]" context="{'group_by': 'owner_user_id'}"/>
+                    </group>
+                    -->
+                </search>
+            </field>
+        </record>
+
+        <record id="hr_equipment_request_view_form" model="ir.ui.view">
+            <field name="name">nvm_design.request.form</field>
+            <field name="model">nvm_design.request</field>
+            <field name="arch" type="xml">
+                <form string="Design Request">
+                    <header>
+                        <button string="Cancel" name="archive_equipment_request" type="object"/>
+                        <field name="stage_id" widget="statusbar" options="{'clickable': '1'}"/>
+                    </header>
+
+                    <sheet>
+                        <field name="company_id" invisible="1"/>
+
+                        <!-- Esto hace que se vea el circulo con el color de la etapa arriba a la derecha
+                        <div >
+                            <span class="badge badge-warning float-right">Canceled</span>
+                        </div>
+                        
+                        <div class="oe_right">
+                            <field name="kanban_state" class="oe_inline" widget="state_selection"/>
+                        </div>
+                        -->
+                        
+                        <div style="float: left !important; width: 40% !important;">
+                        
+                            <div class="oe_title">
+                                <h1>
+                                    <!--<field nolabel="1" name="carta_color_modelo_base" style="width:48%; margin-right: 20px;"/>-->
+
+                                    <field nolabel="1" name="modelo_base_nvm" style="width:25%; margin-right: -6px !important;" string="Modelo Base"/>
+                                    <field placeholder="" name="carta_color_referencia" style="width:35%;"/>
+                                    
+                                    
+                                    <field nolabel="1" name="name" placeholder="LC000" style="width:35%;"/>
+                                    
+
+                                    
+                                    
+                                
+                                </h1>
+                                
+                            </div>
+                        
+                        </div>
+
+                        <h1>
+
+                            <field placeholder="C. Col" name="carta_color_nvm" style="width:20% !important; float: rigth !important; margin-top: 0px !important;"/>
+                            <field placeholder="Colección" name="coleccion" style="width:20% !important; float: rigth !important; margin-top: 0px !important;"/>
+                            <field placeholder="Nombre" name="product_name_nvm" style="width: 20% !important; margin-right: 0px !important; float: rigth !important; text-align: center !important;" string="Nombre del producto"/>
+                            
+                        
+                        </h1>
+
+                        <h2>
+
+                          <field nolabel="1" name="descripcion_web" style="width:40% !important; float: left !important; margin-top: 20px !important;" placeholder="Descripción web"/>
+                        
+                        </h2>
+
+                        <field name="boceto_nvm" widget="image" class="oe_avatar" style="width: 20% !important; height: auto !important; float: rigth !important; margin-top: -65px !important;" nolabel="1" options="{'size': [261, 550]}"/>
+                        <field name="logo_marca_nvm" widget="image" class="oe_avatar" style="width: 20% !important; height: auto !important; float: rigth !important; margin-top: 175px !important; margin-right: -250px !important;" nolabel="1" options="{'size': [261, 550]}"/>
+                        <field name="producir" string="¿Listo para producir?"/>
+                        <field name="modelo_real_nvm" widget="image" class="oe_avatar" style="width: 20% !important; height: auto !important; float: left !important; margin-top: -65px !important;" nolabel="1" options="{'size': [261, 550]}"/>
+                        
+                        
+                        <group>
+
+                            <group style="width: 50% !important;">
+                                <!-- Navima -->
+                                
+                                <field name="horma_nvm" string="Horma"/>
+                                <field name="design_team_id"/>
+                                <!-- Fin Navima -->
+                                <field invisible="1" name="owner_user_id" string="Requested By"/>
+                                <!-- BAJA POR PROBLEMAS DE COMPATIBILIDAD ODOO 16
+                                <field invisible="1" name="category_id" groups="design.group_equipment_manager" context="{'default_company_id':company_id}"/>
+                                -->
+                                <field invisible="1" name="request_date" readonly="True"/>
+                                <field invisible="1" name="done"/>
+                                <field invisible="1" name="close_date" readonly="True"/>
+                                <field invisible="1" name="archive"/>
+                                <field invisible="1" name="design_type"/>
+                                <field invisible="1" name="priority" widget="priority"/>
+                                <!-- Esto es para el mail
+                                <field invisible="1" name="email_cc" string="Email cc" groups="base.group_no_one"/>
+                                -->
+                                <!-- Navima -->
+                                <!--<field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>-->
+                                <field name="producir" string="¿Listo para producir?"/>
+                                <field name="tipo_de_producto" string="Tipo de producto"/>
+                                <!-- Fin Navima -->
+
+                            </group>
+                            
+                            <group style="width 50% !important;">
+                                <field name="variante_de_horma_nvm" string="Variante de horma"/>
+                                <field name="categoria_producto_nvm" string="Categoría de producto"/>
+                                <field name="hs_code" string="Código aduanero"/>
+                            </group>
+
+                        </group>
+
+                        <!-- Navima View Group -->
+                        <notebook>
+
+                            <page string="Materiales - Descripciones">
+                                <group>
+                                    <group style="width: 100% !important;" string="MATERIALES">
+                                      
+                                        <field name="material_principal_nvm" style="width: 50% !important;"/>
+                                        
+                                        <field name="materiales">
+                            
+                                                <tree>
+                                                
+                                                    <field name="material" string="Material"/>
+                                                    <field name="porcentaje_presencia" string="Porcentaje"/>
+                                                    <field name="int_ext" string="¿Interior o exterior?"/>
+                                                    
+                                                </tree>
+                                                
+                                        </field>
+
+                                    </group>
+
+                                    <group style="width: 100%;" string="DESCRIPCIONES">
+
+                                        <field style="width: 50%;" name="tipo_de_cierre"/>
+                                        <field style="width: 50%;" name="alto_cana"/>
+                                        <field style="width: 50%;" name="atributo_con"/>
+
+                                    </group>
+
+                                </group>
+
+                            </page>
+
+                            <page string="Agentes - Muestras">
+
+                                <button name="add_colors" string="Añadir colores de la carta" type="object"/>
+
+                                <group>
+                                    <field name="muestras">
+                                        <tree string="Muestras" editable="bottom">
+                                            <field name="colores_muestra_nvm"/>
+                                            <field name="agente_de_venta" widget="many2many_tags"/>
+                                            <button name="set_vip_agents" string="Vips" class="oe_highlight" type="object"/>
+                                            <button name="set_all_agents" string="All" class="oe_highlight" type="object"/>
+                                        </tree>
+                                    </field>
+                                </group>
+
+                            </page>
+
+                            <page string="Mensaje de muestras">
+                                <button type="object" name="actualizar_muestras" string="Actualizar"/>
+                                <group>
+                                    <field name="mensaje_muestras" widget="html"/>
+                                </group>
+                            </page>
+
+                            <page string="Fitting">
+
+                                <group string="Resultado de Fitting">
+
+                                    <field widget="html" name="fiting" string=""/>
+                                    
+                                </group>
+
+                            </page>
+
+                            
+                            <page string="Coste y PVP">
+
+                                <group>
+                                    
+                                    <group string="Coste proveedor" style="width: 25%;">
+                                        
+                                        <field name="coste_propuesto" string="Coste Propuesto" style="color: green;"/>
+                                        <field name="coste_final_propuesto" string="Coste con aranceles"/>
+                                        <field name="precio_propuesto" string="Precio Propuesto"/>
+
+                                    </group>
+
+                                    <group string="Coste deseado" style="width: 25%;">
+                                        
+                                        <label for="coste" string="Coste Deseado"/>
+                                        <field nolabel="1" name="coste"/>
+
+                                        <label for="coste_final" string="Coste con aranceles"/>
+                                        <field nolabel="1" name="coste_final"/>
+
+                                        <label for="extra_cost" string="Precio Extra"/>
+                                        <field nolabel="1" name="extra_cost"/>
+
+                                    </group>
+
+                                    <group string="PVP deseado" style="width: 25%;">
+
+                                        <label for="precio" string="Precio EUR"/>
+                                        <field nolabel="1" name="precio" style="color: green;"/>
+
+                                        <label for="precio_usa" string="Precio USD"/>
+                                        <field nolabel="1" name="precio_usa"/>
+
+                                        <label for="precio_it" string="Precio F.O.B"/>
+                                        <field nolabel="1" name="precio_it"/>
+
+                                    </group>
+
+                                    <group string="PVP Wholesalers" style="width: 25%;">
+
+                                        <label for="precio_final" string="Final EUR"/>
+                                        <field nolabel="1" name="precio_final"/>
+
+                                        <label for="precio_final_usa" string="Final USD"/>
+                                        <field nolabel="1" name="precio_final_usa"/>
+                                        
+                                        <label for="precio_final_it" string="Final F.O.B"/>
+                                        <field nolabel="1" name="precio_final_it"/>
+
+                                    </group>
+                                    
+                                </group>
+                                
+                                <group>
+                                    
+                                    <group string="" style="width: 25%;">
+
+                                    </group>
+
+                                    <group string="" style="width: 25%;">
+
+                                    </group>
+
+                                    <group string="PVR" style="width: 25%;">
+                                        <field name="precio_pvr" string="PVR EUR"/>
+                                        <field name="precio_usa_pvr" string="PVR USD"/>
+                                    </group>
+
+                                    <group string="PVP" style="width: 25%;">
+                                        <field name="precio_pvp" string="PVP EUR"/>
+                                        <field name="precio_usa_pvp" string="PVP USD"/>
+                                    </group>
+
+                                </group>
+
+                            </page>
+
+                        </notebook>
+
+                        <!-- Navima View Group -->
+
+                        <field name="description" placeholder="Notas internas..."/>
+
+
+                        <!-- #MAILNVM -->
+                                
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="activity_ids" widget="mail_activity"/>
+                            <field name="message_ids" widget="mail_thread"/>
+                        </div>
+                        
+                      
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="hr_equipment_request_view_tree" model="ir.ui.view">
+            <field name="name">nvm_design.request.tree</field>
+            <field name="model">nvm_design.request</field>
+            <field name="arch" type="xml">
+                <!--
+                    Problema de compatibilidad con odoo 16
+                    <tree string="Design Request" multi_edit="1" decoration-bf="message_needaction==True">
+                    Sustituido en la linea de abajo
+                -->
+                <tree string="Design Request" multi_edit="1">
+                    <!--
+                    Problema de compatibilidad con odoo 16
+                    <field name="message_needaction" invisible="1"/>
+                    -->
+                    <field name="name"/>
+                    <field name="request_date" groups="base.group_no_one"/>
+                    <field name="owner_user_id"/>
+                    <field name="user_id"/>
+                    <field name="stage_id"/>
+                    <field name="company_id" readonly="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="hr_equipment_request_view_kanban" model="ir.ui.view">
+        <field name="name">equipment.request.kanban</field>
+        <field name="model">nvm_design.request</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="stage_id">
+                <field name="id"/>
+                <field name="stage_id"/>
+                <field name="color"/>
+                <field name="priority"/>
+                <label string="Familia" for="equipment_id"/>
+                <field name="equipment_id"/>
+                <field name="user_id"/>
+                <field name="owner_user_id"/>
+                <field name="kanban_state"/>
+                <progressbar field="kanban_state" colors='{"done": "success", "blocked": "danger"}'/>
+                    <templates>
+                        <t t-name="kanban-tooltip">
+                        <ul class="oe_kanban_tooltip">
+                            <li t-if="record.user_id.raw_value"><b>Request to:</b> <t t-esc="record.user_id.value"/></li>
+                        </ul>
+                        </t>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="{{!selection_mode ? 'oe_kanban_color_' + kanban_getcolor(record.color.raw_value) : ''}} oe_kanban_card oe_kanban_global_click oe_semantic_html_override">
+                                <div class="o_dropdown_kanban dropdown">
+
+                                    <a role="button" class="dropdown-toggle o-no-caret btn" data-toggle="dropdown" data-display="static" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                        <span class="fa fa-ellipsis-v"/>
+                                    </a>
+                                    <div class="dropdown-menu" role="menu">
+                                        <t t-if="widget.editable"><a role="menuitem" type="edit" class="dropdown-item">Edit...</a></t>
+                                        <t t-if="widget.deletable"><a role="menuitem" type="delete" class="dropdown-item">Delete</a></t>
+                                        <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                    </div>
+                                </div>
+                                <div class="oe_kanban_content" tooltip="kanban-tooltip">
+                                    <div style="width: 125px !important; text-align: left !important;" class="o_kanban_image">
+                                        <field style="font-weight: bold !important;" name="coleccion"/>
+                                        <img t-att-src="kanban_image('nvm_design.request', 'boceto_nvm', record.id.raw_value)" alt="Product" class="o_image_128_contain"/>
+                                        <field style="font-weight: bold !important;" name="product_name_nvm"/>
+                                    </div>
+                                    <div style="text-align: right !important;" class="oe_kanban_details">
+                                      
+                                        <strong class="o_kanban_record_title">
+                                            <br/>
+                                            <field name="modelo_base_nvm"/>
+                                            <field name="carta_color_referencia"/>
+                                            <br/>
+                                            <field name="name"/>
+                                            <br/>
+                                            <field name="horma_nvm"/>
+                                            <span> - </span>
+                                            <field name="variante_de_horma_nvm"/>
+                                            <br/>
+                                            <field name="design_team_id"/>
+                                            <br/>
+                                        </strong>
+                                        
+                                        <!--<span name="owner_user_id" t-if="record.owner_user_id.raw_value">Creado por: <field name="owner_user_id"/><br/></span>-->
+                                    
+                                    </div>
+                                    <br/>
+                                    <div class="o_kanban_record_body">
+                                        
+                                        <span class="oe_grey" t-if="record.equipment_id.raw_value"><field name="equipment_id"/><br/></span>
+                                        
+                                    </div>
+                                    <div class="o_kanban_record_bottom" style="margin-left: 10px;">
+                                        <div class="oe_kanban_bottom_right">
+                                            <field name="kanban_state" widget="state_selection"/>
+                                            <img t-att-src="kanban_image('res.users', 'image_128', record.user_id.raw_value)" t-att-title="record.user_id.value" t-att-alt="record.user_id.value" class="oe_kanban_avatar float-right"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="oe_clear"/>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- equiment.request : actions -->
+        <!--
+        <record id="hr_equipment_request_action" model="ir.actions.act_window">
+            <field name="name">Design Requests</field>
+            <field name="res_model">nvm_design.request</field>
+            <field name="view_mode">kanban,tree,form,pivot,graph</field>
+            <field name="view_id" ref="hr_equipment_request_view_kanban"/>
+            <field name="context">{'default_user_id': uid}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Add a new design request
+                </p><p>
+                    Follow the process of the request and communicate with the collaborator.
+                </p>
+            </field>
+        </record>
+        -->
+        <!--
+        <record id="hr_equipment_request_action_link" model="ir.actions.act_window">
+            <field name="name">Design Requests</field>
+            <field name="res_model">nvm_design.request</field>
+            <field name="view_mode">kanban,tree,form,pivot,graph</field>
+            <field name="search_view_id" ref="hr_equipment_request_view_search"/>
+            <field name="view_id" ref="hr_equipment_request_view_kanban"/>
+            -->
+            <!--<field name="context">{
+                'search_default_category_id': [active_id],
+                'default_category_id': active_id,
+            }</field>-->
+            <!--
+                <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Add a new design request
+                </p><p>
+                    Follow the process of the request and communicate with the collaborator.
+                </p>
+            </field>
+        </record>
+        -->
+
+        <record id="hr_equipment_request_action_from_equipment" model="ir.actions.act_window">
+            <field name="name">Design Requests</field>
+            <field name="res_model">nvm_design.request</field>
+            <!--
+                TODO REFERENCIA FALLA EN TRASPASO
+                    <field name="binding_model_id" ref="design.model_design_equipment"/>
+            -->
+            <field name="view_mode">kanban,tree,form,pivot,graph</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Add a new design request
+                </p><p>
+                    Follow the process of the request and communicate with the collaborator.
+                </p>
+            </field>
+        </record>
+
+        <record id="hr_equipment_todo_request_action_from_dashboard" model="ir.actions.act_window">
+            <field name="name">Design Requests</field>
+            <field name="res_model">nvm_design.request</field>
+            <field name="view_mode">kanban,tree,form,pivot,graph</field>
+            <field name="context">{
+                'default_design_team_id': active_id,
+            }</field>
+            <field name="domain">[('design_team_id', '=', active_id), ('design_type', 'in', context.get('design_type', ['preventive', 'corrective']))]</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Add a new design request
+                </p><p>
+                    Follow the process of the request and communicate with the collaborator.
+                </p>
+            </field>
+        </record>
+
+        <!---<record id="hr_equipment_request_action_cal" model="ir.actions.act_window">
+            <field name="name">Design Requests</field>
+            <field name="res_model">nvm_design.request</field>
+            <field name="view_mode">calendar,kanban,tree,form,pivot,graph</field>
+            <field name="view_id" ref="hr_equipment_view_calendar"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Add a new design request
+                </p><p>
+                    Follow the process of the request and communicate with the collaborator.
+                </p>
+            </field>
+        </record>-->
+
+        <record id="design_request_action_reports" model="ir.actions.act_window">
+            <field name="name">Design Requests</field>
+            <field name="res_model">nvm_design.request</field>
+            <field name="view_mode">graph,pivot,kanban,tree,form,calendar</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Add a new design request
+                </p><p>
+                    Follow the process of the request and communicate with the collaborator.
+                </p>
+            </field>
+        </record>
+
+        <!-- equipment.stage : views -->
+        <record id="hr_equipment_stage_view_search" model="ir.ui.view">
+            <field name="name">nvm_design.stage.search</field>
+            <field name="model">nvm_design.stage</field>
+            <field name="arch" type="xml">
+                <search string="Design Request Stages">
+                <field name="name" string="Design Request Stages"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="hr_equipment_stage_view_tree" model="ir.ui.view">
+            <field name="name">nvm_design.stage.tree</field>
+            <field name="model">nvm_design.stage</field>
+            <field name="arch" type="xml">
+                <tree string="Design Request Stage" editable="top">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="fold"/>
+                    <field name="done"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="hr_equipment_stage_view_kanban" model="ir.ui.view">
+            <field name="name">nvm_design.stage.kanban</field>
+            <field name="model">nvm_design.stage</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div>
+                                    <strong><field name="name"/></strong>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- equipment.stages : actions -->
+        <record id="hr_equipment_stage_action" model="ir.actions.act_window">
+            <field name="name">Stages</field>
+            <field name="res_model">nvm_design.stage</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a new stage in the design request
+            </p>
+            </field>
+        </record>
+
+        <!-- design.team: views -->
+        <record id="design_team_view_form" model="ir.ui.view">
+            <field name="name">design.team.form</field>
+            <field name="model">design.team</field>
+            <field name="arch" type="xml">
+                <form string="Design Team">
+                    <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only" string="Team Name"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="active" invisible="1"/>
+                            <field name="member_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create': True}"/>
+                        </group>
+                        <group>
+                            <!--
+                                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                            -->
+                            <field name="company_id" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="design_team_view_tree" model="ir.ui.view">
+            <field name="name">design.team.tree</field>
+            <field name="model">design.team</field>
+            <field name="arch" type="xml">
+                <tree string="Design Team" editable="bottom">
+                    <field name="name"/>
+                    <field name="coleccion_nvm"/>
+                    <!--<field name="member_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create': True}"/>
+                    <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>-->
+                </tree>
+            </field>
+        </record>
+
+        <record id="design_team_view_kanban" model="ir.ui.view">
+            <field name="name">design.team.kanban</field>
+            <field name="model">design.team</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div>
+                                    <strong><field name="name"/></strong>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="design_team_kanban" model="ir.ui.view">
+            <field name="name">design.team.kanban</field>
+            <field name="model">design.team</field>
+            <field name="arch" type="xml">
+                <kanban class="oe_background_grey o_kanban_dashboard o_design_team_kanban" create="0">
+                    <field name="coleccion_nvm"/>
+                    <field name="name"/>
+                    <field name="color"/>
+                    <!--
+                    <field name="todo_request_count"/>
+                    -->
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="#{!selection_mode ? kanban_color(record.color.raw_value) : ''}">
+                                <div t-attf-class="o_kanban_card_header">
+                                    <div class="o_kanban_card_header_title">
+                                        <div class="o_primary">
+                                            <field name="coleccion_nvm" style="width: 40%; margin-right: 30px !important;"/>
+                                            <a type="action">
+                                                <field name="name" style="width: 40%;" class="oe_inline"/>
+                                            </a></div>
+                                    </div>
+                                    <div class="o_kanban_manage_button_section">
+                                        <a class="o_kanban_manage_toggle_button" href="#"><i class="fa fa-ellipsis-v" role="img" aria-label="Manage" title="Manage"/></a>
+                                    </div>
+                                </div>
+                                <!--
+                                <div class="container o_kanban_card_content">
+                                    <div class="row">
+                                        <div class="col-6 o_kanban_primary_left">
+                                            <button class="btn btn-primary"  type="action" context="{'search_default_todo': 1}">
+                                                <t t-esc="record.todo_request_count.value"/> En diseño
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                -->
+                                <div class="container o_kanban_card_manage_pane dropdown-menu" role="menu">
+                                    <div class="row">
+                                        <!--
+                                        <div class="col-6 o_kanban_card_manage_section o_kanban_manage_view">
+                                            <div role="menuitem" class="o_kanban_card_manage_title">
+                                                <span>View</span>
+                                            </div>
+                                            <div role="menuitem">
+                                                <a type="action">
+                                                    All
+                                                </a>
+                                            </div>
+                                            <div role="menuitem">
+                                                <a type="action" context="{'search_default_todo': 1}">
+                                                    To Do
+                                                </a>
+                                            </div>
+                                            <div role="menuitem">
+                                                <a type="action" context="{'search_default_progress': 1}">
+                                                    In Progress
+                                                </a>
+                                            </div>
+                                            <div role="menuitem">
+                                                <a type="action" context="{'search_default_done': 1}">
+                                                    Done
+                                                </a>
+                                            </div>
+                                        </div>-->
+                                        <div class="col-6 o_kanban_card_manage_section o_kanban_manage_new">
+                                            <!--
+                                            <div role="menuitem" class="o_kanban_card_manage_title">
+                                                <span>Reporting</span>
+                                            </div>
+                                            -->
+                                            <div role="menuitem">
+                                                <a name="%(design_request_action_reports)d" type="action" context="{'search_default_design_team_id': active_id}">
+                                                    Bocetos de diseño
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div t-if="widget.editable" class="o_kanban_card_manage_settings row">
+                                        <div class="col-8" role="menuitem" aria-haspopup="true">
+                                            <ul role="menu" class="oe_kanban_colorpicker" data-field="color"/>
+                                        </div>
+                                        <div role="menuitem" class="col-4 text-right">
+                                            <a type="edit">Ajustes</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
+
+        <record id="muestras_navima_color_form" model="ir.ui.view">
+            <field name="name">muestras.navima.color.form</field>
+            <field name="model">muestras.navima.color</field>
+            <field name="arch" type="xml">
+                <form string="Muestras Navima">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only" string="Muestra"/>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="colores_muestra_nvm"/>
+                                <field name="agente_de_venta" widget="many2many_tags"/>
+                            </group>
+                            <button name="set_vip_agents" string="Vips" type="object"/>
+                            <button name="set_all_agents" string="All" type="object"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="design_team_view_search" model="ir.ui.view">
+            <field name="name">design.team.search</field>
+            <field name="model">design.team</field>
+            <field name="arch" type="xml">
+                <search string="Search">
+                    <field string="Team" name="name"/>
+                    <filter string="Archived" domain="[('active', '=', False)]" name="inactive"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- MUESTRAS AGENTES - muestras.navima.color -->
+
+        <record id="muestras_navima_color_view_tree" model="ir.ui.view">
+            <field name="name">muestras.navima.color.tree</field>
+            <field name="model">muestras.navima.color</field>
+            <field name="arch" type="xml">
+                <tree string="Assign To User">
+                    <field name="name" string="Name"/>
+                    <field name="colores_muestra_nvm"/>
+                    <field name="agente_de_venta" widget="many2many_tags"/>
+                    <field name="diseno_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="muestras_navima_color_view_kanban" model="ir.ui.view">
+            <field name="name">muestras.navima.color.kanban</field>
+            <field name="model">muestras.navima.color</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="name">
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="imagen"/>
+                    <field name="agente_de_venta"/>
+                    <field name="colores_muestra_nvm"/>
+
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div>
+                                <div class="oe_kanban_content">
+                                    <div class="o_kanban_image">
+                                        <img t-att-src="kanban_image('muestras.navima.color', 'imagen', record.id.raw_value)" alt="Imagen" class="o_image_64_contain"/>
+                                    </div>
+                                    <div class="oe_kanban_details">
+                                        <strong class="o_kanban_record_title">
+                                            <div style="float: left; text-align: center; margin-right: 15px;"><field name="name"/></div>
+                                            <div style="float: left; text-align: center; margin-right: 15px;"><field name="colores_muestra_nvm"/></div>
+                                            <div style="float: left; text-align: center;"><field name="diseno_id"/></div>
+                                            <br/>
+                                            <div><field name="agente_de_venta" widget="many2many_tags"/></div>
+                                        </strong>
+                                    </div>
+                                </div>
+                                <div class="oe_clear"></div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- FIN MUESTRAS AGENTES - muestras.navima.color -->
+
+        <!-- equipment.team : actions -->
+        <record id="design_team_action_settings" model="ir.actions.act_window">
+            <field name="name">Teams</field>
+            <field name="res_model">design.team</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="design_team_view_search"/>
+            <field name="view_ids" eval="[(5, 0, 0),
+                    (0, 0, {'view_mode': 'tree', 'view_id': ref('design_team_view_tree')}),
+                    (0, 0, {'view_mode': 'kanban', 'view_id': ref('design_team_view_kanban')})]"/>
+            <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a team in the design request
+            </p>
+            </field>
+        </record>
+
+        <record id="design_dashboard_action" model="ir.actions.act_window">
+            <field name="name">Design Teams</field>
+            <field name="res_model">design.team</field>
+            <field name="view_mode">kanban,form</field>
+            <field name="view_id" ref="design_team_kanban"/>
+            <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a new stage in the design request
+            </p>
+            </field>
+        </record>
+
+        <!-- EQUIPAMIENTO -->
+
+        <record id="hr_equipment_view_form" model="ir.ui.view">
+        <field name="name">equipment.form</field>
+        <field name="model">design.equipment</field>
+        <field name="arch" type="xml">
+                <form string="Equipments">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="%(hr_equipment_request_action_from_equipment)d"
+                                type="action"
+                                class="oe_stat_button"
+                                context="{'default_company_id': company_id}"
+                                icon="fa-wrench">
+                                <field string="Design" name="design_count" widget="statinfo"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1><field name="name" string="Name" placeholder="Equipment Name"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="active" invisible="1"/>
+                                <field name="company_id" options="{'no_create': True}"/>
+                                <field name="owner_user_id" string="Owner"/>
+                            </group>
+                            <group>
+                                <field name="design_team_id" context="{'default_company_id':company_id}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Design">
+                                <group>
+                                    <group name="design">
+                                        <label for="design_duration" string="Design Duration"/>
+                                        <div class="o_row">
+                                            <field name="design_duration"/> hours
+                                        </div>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="hr_equipment_view_kanban" model="ir.ui.view">
+            <field name="name">equipment.kanban</field>
+            <field name="model">design.equipment</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="name"/>
+                    <field name="owner_user_id"/>
+                    <field name="design_ids"/>
+                    <field name="design_open_count"/>
+                    <progressbar field="activity_state" colors='{"planned": "success", "today": "warning", "overdue": "danger"}'/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="{{!selection_mode ? 'oe_kanban_color_' + kanban_getcolor(record.color.raw_value) : ''}} oe_kanban_card oe_kanban_global_click">
+                                <div class="o_dropdown_kanban dropdown" t-if="!selection_mode">
+
+                                    <a role="button" class="dropdown-toggle o-no-caret btn" data-toggle="dropdown" data-display="static" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                        <span class="fa fa-ellipsis-v"/>
+                                    </a>
+                                    <div class="dropdown-menu" role="menu">
+                                        <t t-if="widget.editable"><a role="menuitem" type="edit" class="dropdown-item">Edit...</a></t>
+                                        <t t-if="widget.deletable"><a role="menuitem" type="delete" class="dropdown-item">Delete</a></t>
+                                        <div role="separator" class="dropdown-divider"></div>
+                                        <div role="separator" class="dropdown-header">Record Colour</div>
+                                        <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                    </div>
+                                </div>
+                                <div class="oe_kanban_content" tooltip="kanban-tooltip">
+                                    <div class="o_kanban_record_top">
+                                        <b class="o_kanban_record_title"><field name="name"/></b>
+                                    </div>
+                                    <div class="o_kanban_record_bottom">
+                                        <div class="oe_kanban_bottom_left">
+                                            <div class="badge badge-danger" t-if="!selection_mode and record.design_open_count.raw_value" >
+                                                <t t-esc="record.design_open_count.raw_value"/> Request
+                                            </div>
+                                            <div class="badge badge-secondary" t-if="!selection_mode and record.next_action_date.raw_value" >
+                                                <t t-esc="moment(record.next_action_date.raw_value).format('MMMM Do')"/>
+                                            </div>
+                                        </div>
+                                        <div class="oe_kanban_bottom_right">
+                                            
+                                            
+                                            <img t-att-src="kanban_image('res.users', 'image_128', record.owner_user_id.raw_value)" t-att-title="record.owner_user_id.value" t-att-alt="record.owner_user_id.value" class="oe_kanban_avatar"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="oe_clear"></div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
+        <!-- FIN EQUIPAMIENTO -->
+
+        <!-- Menu items hierachy -->
+        <menuitem
+            id="menu_design_title"
+            name="Diseño"
+            web_icon="design,static/description/icon.png"
+            sequence="110"/>
+
+        <menuitem
+            id="menu_m_dashboard"
+            name="Dashboard"
+            parent="menu_design_title"
+            groups="base.group_user"
+            action="design_dashboard_action"
+            sequence="0"/>
+
+        <menuitem
+            id="menu_m_request"
+            name="Diseño"
+            parent="menu_design_title"
+            groups="base.group_user"
+            sequence="1"/>
+
+        <menuitem
+            id="menu_m_request_form"
+            name="Bocetos de diseño"
+            parent="menu_m_request"
+            action=""
+            groups="base.group_user"
+            sequence="1"/>
+
+        <menuitem
+            id="menu_m_reports"
+            name="Reporting"
+            parent="menu_design_title"
+            groups="base.group_user"
+            sequence="3"/>
+
+        <menuitem
+            id="menu_m_reports_losses"
+            name="Losses Analysis"
+            parent="menu_m_reports"
+            groups="base.group_user"
+            sequence="2"/>
+
+        <menuitem
+            id="design_reporting"
+            name="Reporting"
+            parent="menu_design_title"
+            sequence="20"/>
+
+        <menuitem
+            id="design_request_reporting"
+            action="design_request_action_reports"
+            parent="design_reporting"/>
+        
+        <menuitem
+            id="menu_design_configuration"
+            name="Configuration"
+            parent="menu_design_title"
+            groups=""
+            sequence="100"/>
+        <!--
+        <menuitem
+            id="menu_design_teams"
+            name="Design Teams"
+            parent="menu_design_configuration"
+            action="design_team_action_settings"
+            groups=""
+            sequence="1"/>-->
+
+        <!--<menuitem
+            id="menu_design_stage_configuration"
+            name="Design Stages"
+            parent="menu_design_configuration"
+            action="hr_equipment_stage_action"
+            groups="base.group_no_one"
+            sequence="3" />-->
+    </data>
+</odoo>

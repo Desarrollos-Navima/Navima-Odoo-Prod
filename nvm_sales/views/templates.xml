@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+            
+        <record id="sale_order_form_view_inherit" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='date_order']" position="after">
+                  
+                  <field name="entregar_desde" widget="date"/>
+                  <field name="entregar_hasta" widget="date"/>
+                  
+                </xpath>
+
+                <xpath expr="//field[@name='sale_order_template_id']" position="after">
+                  
+                  <field name="asumo_riesgo"/>
+                  
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+
+    <!--
+    <template id="assets_backend" name="assets nvm_sales" inherit_id="sale.view_order_form">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/nvm_sales/static/js/color_set.js"/>
+        </xpath>
+    </template>
+    -->
+
+</odoo>

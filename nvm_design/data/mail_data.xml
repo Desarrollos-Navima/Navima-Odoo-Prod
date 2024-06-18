@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="email_template_muestras_boceto" model="mail.template">                                
+            <field name="name">Mail de muestras boceto</field>                                
+            <field name="model_id" ref="nvm_design.request"></field>                          
+            <field name="subject">REF. Design: ${object.name}</field>                                
+            <field name="body_html" type="html">                                    
+                ${object.mensaje_muestras}                       
+            </field>                            
+        </record>
+
+</odoo>
